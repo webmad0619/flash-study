@@ -21,7 +21,7 @@ router.post("/signup-user", (req, res) => {
         res.render('signup', {errorMessage: "user already exists! :)"});
         return
       } else {
-        const saltRounds = 1
+        const saltRounds = 10
         const theSalt = bcrypt.genSaltSync(saltRounds)
         const hashedPassword = bcrypt.hashSync(req.body.password, theSalt)
       
