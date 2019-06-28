@@ -1,0 +1,16 @@
+<h1>All my books</h1>
+<a href="/book-list/asc">Order book names ascending</a>
+<a href="/book-list/desc">Order book names descending</a>
+<ul>
+  {{#each books}}
+  <li>
+    <a href="/update/{{this._id}}">{{this.title}}</a>
+    {{#each this.author}}
+      {{this.name}} {{this.lastName}}
+    {{/each}}
+    {{this.year}}
+  </li>
+  {{/each}}
+</ul>
+
+<a href="/create">create new book</a>
