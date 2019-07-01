@@ -10,7 +10,7 @@ const logger = require('morgan');
 const path = require('path');
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
-
+var flash = require("connect-flash")
 
 mongoose
   .connect('mongodb://localhost/authorization', { useNewUrlParser: true })
@@ -47,6 +47,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 app.use(session({
+  resave: true,
+  saveUninitialized: true,
   secret: "basic-auth-secret",
   cookie: { maxAge: 60000 },
   store: new MongoStore({
@@ -55,24 +57,10 @@ app.use(session({
   })
 }));
 
-// app.use((req, res, next) => {
-//   console.log(req.route)
-//   if (req.route.path === "/login" || req.route.path === "/signup") {
-//     next()
-//   }
-
-//   if (req.session.currentUser) { // <== if there's user in the session (user is logged in)
-//     next(); // ==> go to the next route ---
-//   } else {                          //    |
-//     res.redirect("/login");         //    |
-//   }                                 //    |
-// });
-
+app.use(flash());
 
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
-
-
 
 const index = require('./routes/index');
 app.use('/', index);
